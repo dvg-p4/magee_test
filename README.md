@@ -12,5 +12,5 @@ better than their own docs (which have a number of issues including "being a PDF
   [`MAGEE.pdf`](https://github.com/large-scale-gxe-methods/MAGEE/blob/master/inst/doc/MAGEE.pdf)
   and generates the below output files.
 - [`magee_gds_out.tsv`](magee_gds_out.tsv): Output from `glmm.gei()`.
-- [`magee_magee.tsv`](magee_magee.tsv): Output from `MAGEE()`.
 - [`magee_meta.tsv`](magee_meta.tsv): Output from `glmm.gei.meta()`.
+- [`magee_magee.tsv`](magee_magee.tsv): Output from `MAGEE()`, via `data.table::fwrite()`.
