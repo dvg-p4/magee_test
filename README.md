@@ -1,8 +1,8 @@
 ## Overview
 
-This repo is intended to document the basic usage and output format of (MAGEE)[https://github.com/large-scale-gxe-methods/MAGEE]
-better than their own docs (which have a number of issues including "being a PDF that's hard to copy code blocks from" and
-"forgetting some steps and not actually working").
+This repo is intended to document the basic usage and output format of [MAGEE](https://github.com/large-scale-gxe-methods/MAGEE)
+better than [their own docs](https://github.com/large-scale-gxe-methods/MAGEE/blob/master/inst/doc/MAGEE.pdf), which have a number of
+issues including "being a PDF that's hard to copy code blocks from" and "forgetting some steps and not actually working as written".
 
 ## Files
 
