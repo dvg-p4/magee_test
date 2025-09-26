@@ -1,0 +1,17 @@
+# R
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+.Rprofile
+
+# renv
+renv/
+
+# macOS
+.DS_Store
+
+# Temporary files
+*.tmp
+*.temp

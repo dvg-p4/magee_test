@@ -1,0 +1,143 @@
+
+# Running through the MAGEE example in the pdf manual
+
+```{r setup}
+library(MAGEE)
+library(GMMAT)
+library(data.table)
+```
+
+
+```{r}
+GRM.file <- system.file("extdata", "GRM.txt.bz2", package = "MAGEE")
+GRM <- as.matrix(read.table(GRM.file, check.names = FALSE))
+```
+
+```{r}
+pheno.file = system.file("extdata", "pheno.txt", package = "MAGEE")
+pheno = fread(pheno.file, header = TRUE)
+pheno
+```
+
+
+```{r}
+model0 <- glmmkin(disease ~ age + sex, data = pheno, kins = GRM,
+                  id = "id", family = binomial(link = "logit"))
+```
+
+```{r}
+infile <- system.file("extdata", "geno.gds", package = "MAGEE")
+gds_outfile <- "magee_gds_out.tsv"
+infile
+gds_outfile
+```
+
+```{r}
+glmm.gei(model0, interaction='sex', geno.file = infile, outfile = gds_outfile)
+```
+
+```{r}
+gds_result = fread(gds_outfile)
+gds_result
+```
+
+```{r}
+infile1 <- system.file("extdata", "meta1.txt", package = "MAGEE")
+infile2 <- system.file("extdata", "meta2.txt", package = "MAGEE")
+infile3 <- system.file("extdata", "meta3.txt", package = "MAGEE")
+infile4 <- system.file("extdata", "meta4.txt", package = "MAGEE")
+infile5 <- system.file("extdata", "meta5.txt", package = "MAGEE")
+```
+
+```{r}
+meta_outfile = "magee_meta.tsv"
+```
+
+```{r}
+glmm.gei.meta(files = c(infile1, infile2, infile3, infile4, infile5),interaction="sex", outfile = meta_outfile)
+```
+
+```{r}
+meta_result = fread(meta_outfile)
+meta_result
+```
+
+```{r}
+colnames(gds_result)
+colnames(meta_result)
+```
+
+```{r}
+setdiff(colnames(gds_result), colnames(meta_result))
+```
+
+```{r}
+setdiff(colnames(meta_result), colnames(gds_result))
+```
+
+```{r}
+geno.file <- system.file("extdata", "geno.gds", package = "MAGEE")
+group.file <- system.file("extdata", "SetID.withweights.txt", package = "MAGEE")
+```
+
+```{r}
+magee_res = MAGEE(model0, interaction='sex', geno.file, group.file, group.file.sep = "\t", tests=c("JV", "JF", "JD"))
+magee_res
+```
+
+```{r}
+fwrite(magee_res, "magee_magee.tsv", sep = "\t")
+```
+
+
+## MAGEE.meta (WIP)
+
+Note: `MAGEE.pdf` has `meta.files.prefix <- tempfile()` which doesn't work, since the files
+need to actually exist beforehand.
+
+https://github.com/large-scale-gxe-methods/MAGEE/issues/25
+
+```{r}
+meta.files.prefix <- tempfile() 
+MAGEE.meta(meta.files.prefix = meta.files.prefix, group.file=group.file, tests=c("JV", "JF", "JD")) 
+```
+
+
+`?MAGEE.meta` describes `meta.files.prefix` as:
+
+```
+a character vector for prefix of intermediate files (.score.* and .var.*) required in a meta-analysis. Each element represents the prefix of .score.* and .var.* from one cohort. The length of vector should be equal to the number of cohorts.
+```
+
+The below also doesn't work.
+
+```{r}
+meta1.file <- system.file("extdata", "meta1.txt", package = "MAGEE")
+meta1.file
+```
+
+```{r}
+dirname(meta1.file)
+```
+
+```{r}
+list.files(dirname(meta1.file))
+```
+
+```{r}
+meta.files.prefix = sub("1.txt", "", meta1.file)
+meta.files.prefix
+```
+
+
+```{r}
+magee_meta_res = MAGEE.meta(meta.files.prefix = meta.files.prefix, group.file=group.file, tests=c("JV", "JF", "JD"))
+```
+
+
+
+
+
+
+
+
